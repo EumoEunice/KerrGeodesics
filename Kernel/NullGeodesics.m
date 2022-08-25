@@ -142,6 +142,10 @@ r0[\[Tau]_]:=(r4(r3-r1)-r3(r4-r1)JacobiSN[X2[\[Tau]],k]^2)/((r3-r1)-(r4-r1)Jacob
 assoc=Association["Trajectory"->r0,"RadialRoots"-> roots,"ConstantsofMotion"-> consts]; 
 case2Function[a,rs,\[Theta]s,\[Lambda],\[Eta],prs,p\[Theta]s,assoc]]
 
+(* ::Input::Initialization:: *)
+Format[case2Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_]]:="case2Function["<>ToString[a]<>","<>ToString[rs]<>","<>ToString[\[Theta]s]<>","<>ToString[\[Lambda]]<>","<>ToString[\[Eta]]<>","<>ToString[prs]<>","<>ToString[p\[Theta]s]<>",<<>>]";
+case2Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][\[Tau]_/;StringQ[\[Tau]]==False]:= assoc["Trajectory"][\[Tau]]
+case2Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][y_?StringQ] := assoc[y]
 
 (* ::Input::Initialization:: *)
 \[Tau]r4[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_]:=Module[{\[Tau],Irs,F2,\[Phi],k,x2,r1,r2,r3,r4,roots,\[Nu]r},
@@ -169,12 +173,6 @@ F2=2/Sqrt[(r3-r1)(r4-r2)](*EllipticF[ArcSin[x2],k]*)Sin[\[Phi]]CarlsonRF[Cos[\[P
  Irs=F2;
 tau=(-Irs r1 r2 \[Nu]r+Irs r2 r3 \[Nu]r+Irs r1 r4 \[Nu]r-Irs r3 r4 \[Nu]r)/(r1 r2-r2 r3-r1 r4+r3 r4)(*eqn B46*)
 ]
-
-
-(* ::Input::Initialization:: *)
-Format[case2Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_]]:="case2Function["<>ToString[a]<>","<>ToString[rs]<>","<>ToString[\[Theta]s]<>","<>ToString[\[Lambda]]<>","<>ToString[\[Eta]]<>","<>ToString[prs]<>","<>ToString[p\[Theta]s]<>",<<>>]";
-case2Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][\[Tau]_/;StringQ[\[Tau]]==False]:= assoc["Trajectory"][\[Tau]]
-case2Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][y_?StringQ] := assoc[y]
 
 
 (* ::Input::Initialization:: *)
@@ -451,10 +449,6 @@ If[(rs^2+a^2-a \[Lambda])^2-(rs^2-2 M rs+a^2)(\[Eta]+(\[Lambda]-a)^2)>=0,If[\[Et
 
 
 (* ::Input::Initialization:: *)
-RR[rs_]:=(rs^2+a^2-a \[Lambda])^2-(rs^2-2 M rs+a^2)(\[Eta]+(\[Lambda]-a)^2)
-
-
-(* ::Input::Initialization:: *)
 PolarSphericalPeriod[a_,rs_,\[Phi]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_]:=Module[{M=1,G,\[CapitalDelta]\[Theta],up,um,consts},
 \[CapitalDelta]\[Theta]=1/2 (1-(\[Eta]+\[Lambda]^2)/a^2); 
 up=\[CapitalDelta]\[Theta]+Sqrt[\[CapitalDelta]\[Theta]^2+\[Eta]/a^2](*eqn 19*); 
@@ -606,55 +600,6 @@ Format[\[Theta]PNGFunction[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_
 \[Theta]PNGFunction[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][y_?StringQ] := assoc[y]
 
 
-(* ::Input::Initialization:: *)
-KerrCelestialcordinates\[Alpha][a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_]:=Module[{L,\[Alpha],\[Beta],consts,\[Theta],assoc},
-\[Theta][\[Tau]_]:=PolarMotion[a,rs,\[Theta]s,\[Lambda],\[Eta],prs,p\[Theta]s][\[Tau]];
-\[Alpha][\[Tau]_]:=-\[Lambda] Csc[\[Theta][\[Tau]]];
-assoc=Association["Trajectory"-> \[Alpha]];
-KerrCelestialcordinates\[Alpha]Function[a,rs,\[Theta]s,\[Lambda],\[Eta],prs,p\[Theta]s,assoc]
-](*ovalles, results*)
-
-
-(* ::Input::Initialization:: *)
-Format[KerrCelestialcordinates\[Alpha]Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_]]:="KerrCelestialcordinates\[Alpha]Function["<>ToString[a]<>","<>ToString[rs]<>","<>ToString[\[Theta]s]<>","<>ToString[\[Lambda]]<>","<>ToString[\[Eta]]<>","<>ToString[prs]<>","<>ToString[p\[Theta]s]<>",<<>>]";
-KerrCelestialcordinates\[Alpha]Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][\[Tau]_/;StringQ[\[Tau]]==False]:= assoc["Trajectory"][\[Tau]]
-KerrCelestialcordinates\[Alpha]Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][y_?StringQ] := assoc[y]
-
-
-(* ::Input::Initialization:: *)
-KerrCelestialcordinates\[Beta][a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_]:=Module[{L,\[Alpha],\[Beta],consts,\[Theta],assoc},
-\[Theta][\[Tau]_]:=PolarMotion[a,rs,\[Theta]s,\[Lambda],\[Eta],prs,p\[Theta]s][\[Tau]];
-\[Beta][\[Tau]_]:=Sqrt[\[Eta]+a^2 Cos[\[Theta][\[Tau]]]^2-\[Lambda]^2 Cot[\[Theta][\[Tau]]]^2]; 
-assoc=Association["Trajectory"-> \[Beta]];
-KerrCelestialcordinates\[Beta]Function[a,rs,\[Theta]s,\[Lambda],\[Eta],prs,p\[Theta]s,assoc]
-]
-
-
-(* ::Input::Initialization:: *)
-Format[KerrCelestialcordinates\[Beta]Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_]]:="KerrCelestialcordinates\[Beta]Function["<>ToString[a]<>","<>ToString[rs]<>","<>ToString[\[Theta]s]<>","<>ToString[\[Lambda]]<>","<>ToString[\[Eta]]<>","<>ToString[prs]<>","<>ToString[p\[Theta]s]<>",<<>>]";
-KerrCelestialcordinates\[Beta]Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][\[Tau]_/;StringQ[\[Tau]]==False]:= assoc["Trajectory"][\[Tau]]
-KerrCelestialcordinates\[Beta]Function[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][y_?StringQ] := assoc[y]
-
-
-(* ::Input::Initialization:: *)
-\[PlusMinus]c9_:={c9,-c9}
-
-
-(* ::Input::Initialization:: *)
-newKDSPS[a_,M_,r_,\[Theta]_,\[CapitalLambda]_]:=Module[{ret,direct,\[Phi],A,p,q,as,b,c,d,B},
-d=12 a^2 M;
-c=-27 M^2;
-b=18 M;
-as=-3-4 a^2 \[CapitalLambda];
-q=(2b^3-9 as b c+27as^2 d)/(27as^3);
-p=(3as c-b^2)/(3as^2);
-A=2Sqrt[-(p/3)]; 
-\[Phi]=ArcCos[(3q)/(A p)];
-B=-b/(3as); 
-direct=B+A Cos[\[Phi]/3+(4\[Pi])/3];
-ret=B+A Cos[\[Phi]/3];
-{"direct"-> direct,"ret"-> ret}]
-
 
 (* ::Section::Initialization:: *)
 (*Schwarzchild case*)
@@ -681,10 +626,6 @@ ordinarySFunction[a,rs,\[Theta]s,\[Lambda],\[Eta],prs,p\[Theta]s,assoc]
 Format[ordinarySFunction[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_]]:="ordinarySFunction["<>ToString[a]<>","<>ToString[rs]<>","<>ToString[\[Theta]s]<>","<>ToString[\[Lambda]]<>","<>ToString[\[Eta]]<>","<>ToString[prs]<>","<>ToString[p\[Theta]s]<>",<<>>]";
 ordinarySFunction[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][\[Tau]_/;StringQ[\[Tau]]==False]:= assoc["Trajectory"][\[Tau]]
 ordinarySFunction[a_,rs_,\[Theta]s_,\[Lambda]_,\[Eta]_,prs_,p\[Theta]s_,assoc_][y_?StringQ] := assoc[y]
-
-
-(* ::Input::Initialization:: *)
-s[x_]:=-Sin[x]
 
 
 (* ::Input::Initialization:: *)
